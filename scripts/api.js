@@ -1,9 +1,15 @@
 // API key access free account
 var apiKey = "6baec66594d536d831469149c42d3d07"
 
-var currentChoice = "Danbury"
+var cityChoice = "Danbury"
 
-apiCall(`https://api.openweathermap.org/data/2.5/weather?q=${currentChoice}&units=imperial&appid=${apiKey}`)
+
+// Set to variable for easy changing of days to display or loop if expanded
+var forecastDays = 5
+
+
+apiCall(`https://api.openweathermap.org/data/2.5/weather?q=${cityChoice}&units=imperial&appid=${apiKey}`)
+
 
 //function to make API Call
 async function apiCall(urlCall){
@@ -28,62 +34,49 @@ async function apiCall(urlCall){
         console.log(error)
         return alert("You may have misspelled City")
     }
-  
-    //populateScreen()   
+    
     return populateScreen(cW,dW,uvI)
     
 }
 
 
 
-
 function populateScreen(cW,dW,uvI){
 
-
-//load & format date 
+//Load Daily Forecast
     let dateEl = cW.dt
     dateEl = moment.unix(dateEl).format('dddd, MM.DD.YYYY')
-    
-    let image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`)
-   // image.addClass("smallImg")
-   // let imageEl = image[0].html
-   // console.log(typeof imageEl)
+    let image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`)  
+    $(".current").append('<hr />')
+    $(".current").append(`<h2>${cW.name} ${dateEl}</h2>`).append(image).append("<br />")
+    $(".current").append(`Temperature:  ${cW.main.temp} &#176;F`).append('<br />')
+    $(".current").append("Humidity: " + cW.main.humidity).append('<br />')
+    $(".current").append("Wind Speed: " + cW.wind.speed).append('<br />')
+    $(".current").append("UV Index: " + uvI.value).append('<hr />')
 
-    
-$(".current").append('<hr />')
-$(".current").append(`<h2>${cW.name} ${dateEl}</h2>`).append(image).append("<br />")
-$(".current").append(`Temperature:  ${cW.main.temp} &#176;F`).append('<br />')
-$(".current").append("Humidity: " + cW.main.humidity).append('<br />')
-$(".current").append("Wind Speed: " + cW.wind.speed).append('<br />')
-$(".current").append("UV Index: " + uvI.value).append('<hr />')
-
+//Load 5-day Forecast via-loop = forecastDays allows easy adjustment of day range dependant on API
+    x = forecastDays
+    for (x = 1 ; x<forecastDays+1 ; x++) {
+        dateEl = dW.daily[x].dt
+        dateEl = moment.unix(dateEl).format('MM.DD.YYYY (ddd)')
+        $(`#day${x}`).append(`<h6>${dateEl}</h6>`)
+        image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${dW.daily[x].weather[0].icon}@2x.png`)
+        image.addClass("smallImg")
+        $(`#day${x}`).append(image).append('<br />')
+        $(`#day${x}`).append(`Temp  low:  ${dW.daily[x].temp.min} &#176;F`).append('<br />')
+        $(`#day${x}`).append(`Temp high:  ${dW.daily[x].temp.max} &#176;F`).append('<br />')
+        $(`#day${x}`).append('<br />')
+        $(`#day${x}`).append(`Humidity:  ${dW.daily[x].humidity} %`)
+    }
 }
 
-//populateScreen()
 
 //  ***NOTES***
-
-//let dateConvEl = (dW.daily[0].dt) 
-//dateConvEl = moment.unix(dateConvEl).format('(MM/DD/YYYY)')
-
-
-//let image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`);
 
 // conversion moment.unix(yourUnixEpochTime).format('dddd, MMMM Do, YYYY h:mm:ss A')
 
 
-//async function getData() {
-//  try {
-//    const firstCall = await ajax()
 
-// check for data from first call
-//    if (firstCall) {
-//      const secondCall = await ajax(`/url/${firstCall}`)
-//    }
-//  } catch (err) {
-//    console.log(err)
-//  }
-//}  
 
 
 
