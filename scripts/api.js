@@ -1,14 +1,9 @@
 // API key access free account
 var apiKey = "6baec66594d536d831469149c42d3d07"
 
-/// Current Weather Var for Object
-var cW = Object
-// 5day Weather Var
-var dW = Object
-// UvIndex Var
-var uvI = Object
+var currentChoice = "Danbury"
 
-apiCall(`https://api.openweathermap.org/data/2.5/weather?q=Boston&units=imperial&appid=${apiKey}`)
+apiCall(`https://api.openweathermap.org/data/2.5/weather?q=${currentChoice}&units=imperial&appid=${apiKey}`)
 
 //function to make API Call
 async function apiCall(urlCall){
@@ -16,57 +11,55 @@ async function apiCall(urlCall){
     try {
         const r = await $.ajax({url: urlCall, method: "GET"});
         // populate var for function ref
-        cW= (r)
+        var cW = (r)
         // pull lattitude and longitude for following API calls
         let lat = r.coord.lat
         let lon = r.coord.lon
 
     if (r) {
         const r2 = await $.ajax({url: `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`, method: "GET"});
-        // populate var for function ref
-        uvI = (r2)
+        var uvI = (r2)
 
         const r3 = await $.ajax({url: `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=current,minutely,hourly,alerts&appid=${apiKey}`, method: "GET"});
-        // populate var for function ref
-        dW = (r3)
+        var dW = (r3)
+
     }
     }catch(error){
         console.log(error)
+        return alert("You may have misspelled City")
     }
   
-    populateScreen()   
-
-}
-
-
-function populateScreen(){
-
-//let br = document.createElement("br")
-
-$(".container").append('<br />')
-$(".container").append("Name: " + cW.name).append('<br />')
-
-$(".container").append("Humidity: " + cW.main.humidity).append('<br />')
-
-$(".container").append("Temperature: " + cW.main.temp).append('<br />')
-
- // Creating an element to hold the image
- var image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`);
- $(".container").append(image).append('<br />')
-
-//console.log(iconPic)
-
-$(".container").append("Wind Speed: " + cW.wind.speed).append('<br />')
-
-let dateEl = cW.dt
-console.log(dateEl)
-dateEl = moment.unix(dateEl).format('(MM/DD/YYYY)')
-
-$(".container").append("Date: " + dateEl).append('<br />')
+    //populateScreen()   
+    return populateScreen(cW,dW,uvI)
     
 }
 
 
+
+
+function populateScreen(cW,dW,uvI){
+
+
+//load & format date 
+    let dateEl = cW.dt
+    dateEl = moment.unix(dateEl).format('dddd, MM.DD.YYYY')
+    
+    let image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`)
+   // image.addClass("smallImg")
+   // let imageEl = image[0].html
+   // console.log(typeof imageEl)
+
+    
+$(".current").append('<hr />')
+$(".current").append(`<h2>${cW.name} ${dateEl}</h2>`).append(image).append("<br />")
+$(".current").append(`Temperature:  ${cW.main.temp} &#176;F`).append('<br />')
+$(".current").append("Humidity: " + cW.main.humidity).append('<br />')
+$(".current").append("Wind Speed: " + cW.wind.speed).append('<br />')
+$(".current").append("UV Index: " + uvI.value).append('<hr />')
+
+}
+
+//populateScreen()
 
 //  ***NOTES***
 
@@ -74,7 +67,7 @@ $(".container").append("Date: " + dateEl).append('<br />')
 //dateConvEl = moment.unix(dateConvEl).format('(MM/DD/YYYY)')
 
 
-
+//let image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`);
 
 // conversion moment.unix(yourUnixEpochTime).format('dddd, MMMM Do, YYYY h:mm:ss A')
 
