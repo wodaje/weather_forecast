@@ -1,21 +1,14 @@
 // API key access free account
 var apiKey = "6baec66594d536d831469149c42d3d07"
 
-var cityChoice = "Danbury"
-
-
 // Set to variable for easy changing of days to display or loop if expanded
 var forecastDays = 5
 
-
-apiCall(`https://api.openweathermap.org/data/2.5/weather?q=${cityChoice}&units=imperial&appid=${apiKey}`)
-
-
 //function to make API Call
-async function apiCall(urlCall){
+async function apiCall(cityIn){
 
     try {
-        const r = await $.ajax({url: urlCall, method: "GET"});
+        const r = await $.ajax({url: `https://api.openweathermap.org/data/2.5/weather?q=${cityIn}&units=imperial&appid=${apiKey}`, method: "GET"});
         // populate var for function ref
         var cW = (r)
         // pull lattitude and longitude for following API calls
@@ -55,22 +48,29 @@ function populateScreen(cW,dW,uvI){
     $(".current").append("UV Index: " + uvI.value).append('<hr />')
 
 //Load 5-day Forecast via-loop = forecastDays allows easy adjustment of day range dependant on API
-    x = forecastDays
-    for (x = 1 ; x<forecastDays+1 ; x++) {
+    
+    for (x = 1 ; x < forecastDays+1 ; x++) {
         dateEl = dW.daily[x].dt
         dateEl = moment.unix(dateEl).format('MM.DD.YYYY (ddd)')
         $(`#day${x}`).append(`<h6>${dateEl}</h6>`)
         image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${dW.daily[x].weather[0].icon}@2x.png`)
         image.addClass("smallImg")
         $(`#day${x}`).append(image).append('<br />')
-        $(`#day${x}`).append(`Temp  low:  ${dW.daily[x].temp.min} &#176;F`).append('<br />')
+        $(`#day${x}`).append(`Temp low:  ${dW.daily[x].temp.min} &#176;F`).append('<br />')
         $(`#day${x}`).append(`Temp high:  ${dW.daily[x].temp.max} &#176;F`).append('<br />')
         $(`#day${x}`).append('<br />')
         $(`#day${x}`).append(`Humidity:  ${dW.daily[x].humidity} %`)
     }
 }
 
-
+function clearScreen(){
+ 
+        $(".current").empty()
+    
+        for (x = 1 ; x<forecastDays+1 ; x++) {
+        $(`#day${x}`).empty()
+       }
+    }
 //  ***NOTES***
 
 // conversion moment.unix(yourUnixEpochTime).format('dddd, MMMM Do, YYYY h:mm:ss A')
