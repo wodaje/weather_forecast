@@ -1,6 +1,22 @@
 // forecast div for 5 card display (can be dynamically updated easily up to 7 via api input)
 
-popForecast()
+init()
+function init(){
+    let uvIel = localStorage.getItem("uvI")
+    uvI = JSON.parse(uvIel)
+
+    if (uvI !== null){
+    popForecast()    
+    clearScreen()
+    localReStoreW()
+    }    
+    else {
+    alert("You have to establish first history to start enter a town")    
+    popForecast()        
+    }
+}
+
+
 function popForecast(){
 
     $(".forecast").append('<div class ="card-deck" />')
@@ -35,15 +51,7 @@ function popCity(){
     var cityIn = inputEl.val()
     
     clearScreen()
-
-    // $(".current").empty()
-    
-    // for (x = 1 ; x<forecastDays+1 ; x++) {
-    // $(`#day${x}`).empty()
-
-
-    //}
-        apiCall(cityIn)
+    apiCall(cityIn)
     })
     
 }

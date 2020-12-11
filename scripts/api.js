@@ -29,9 +29,8 @@ async function apiCall(cityIn){
     }
     
     return populateScreen(cW,dW,uvI)
-    
-}
 
+}
 
 
 function populateScreen(cW,dW,uvI){
@@ -48,7 +47,8 @@ function populateScreen(cW,dW,uvI){
     $(".current").append("UV Index: " + uvI.value).append('<hr />')
 
 //Load 5-day Forecast via-loop = forecastDays allows easy adjustment of day range dependant on API
-    
+    console.log(dW)
+
     for (x = 1 ; x < forecastDays+1 ; x++) {
         dateEl = dW.daily[x].dt
         dateEl = moment.unix(dateEl).format('MM.DD.YYYY (ddd)')
@@ -60,8 +60,39 @@ function populateScreen(cW,dW,uvI){
         $(`#day${x}`).append(`Temp high:  ${dW.daily[x].temp.max} &#176;F`).append('<br />')
         $(`#day${x}`).append('<br />')
         $(`#day${x}`).append(`Humidity:  ${dW.daily[x].humidity} %`)
+        console.log(dW.daily[x].temp.min)
+        console.log(x)
     }
+
+        
+        localStoreW(cW,dW,uvI)
 }
+
+function localStoreW(cW,dW,uvI){
+
+    let cWel = JSON.stringify(cW)
+    let dWel = JSON.stringify(dW)
+    let uvIel= JSON.stringify(uvI)
+
+    localStorage.setItem("cW",cWel) 
+    localStorage.setItem("dW",dWel) 
+    localStorage.setItem("uvI",uvIel) 
+    
+}
+
+function localReStoreW(){
+
+    let cWel = localStorage.getItem("cW") 
+    let dWel = localStorage.getItem("dW")
+    let uvIel = localStorage.getItem("uvI")
+    
+    cW = JSON.parse(cWel)
+    dW = JSON.parse(dWel)
+    uvI = JSON.parse(uvIel)
+
+    populateScreen(cW,dW,uvI)
+}
+
 
 function clearScreen(){
  
