@@ -47,8 +47,7 @@ function populateScreen(cW,dW,uvI){
     $(".current").append("UV Index: " + uvI.value).append('<hr />')
 
 //Load 5-day Forecast via-loop = forecastDays allows easy adjustment of day range dependant on API
-    console.log(dW)
-
+   
     for (x = 1 ; x < forecastDays+1 ; x++) {
         dateEl = dW.daily[x].dt
         dateEl = moment.unix(dateEl).format('MM.DD.YYYY (ddd)')
@@ -60,8 +59,7 @@ function populateScreen(cW,dW,uvI){
         $(`#day${x}`).append(`Temp high:  ${dW.daily[x].temp.max} &#176;F`).append('<br />')
         $(`#day${x}`).append('<br />')
         $(`#day${x}`).append(`Humidity:  ${dW.daily[x].humidity} %`)
-        console.log(dW.daily[x].temp.min)
-        console.log(x)
+   
     }
 
         
