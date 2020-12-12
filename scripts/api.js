@@ -66,32 +66,33 @@ function populateScreen(cW,dW,uvI){
 
 }
 
+//Old code kept for now for reloading date without api call - not deleted yet as may be useful for something else like history display - possibly
 
-function localStoreW(cW,dW,uvI){
+// function localStoreW(cW,dW,uvI){
 
-    let cWel = JSON.stringify(cW)
-    let dWel = JSON.stringify(dW)
-    let uvIel= JSON.stringify(uvI)
+//     let cWel = JSON.stringify(cW)
+//     let dWel = JSON.stringify(dW)
+//     let uvIel= JSON.stringify(uvI)
 
-    localStorage.setItem("cW",cWel) 
-    localStorage.setItem("dW",dWel) 
-    localStorage.setItem("uvI",uvIel) 
+//     localStorage.setItem("cW",cWel) 
+//     localStorage.setItem("dW",dWel) 
+//     localStorage.setItem("uvI",uvIel) 
     
-}
+// }
 
 
-function localReStoreW(){
+// function localReStoreW(){
 
-    let cWel = localStorage.getItem("cW") 
-    let dWel = localStorage.getItem("dW")
-    let uvIel = localStorage.getItem("uvI")
+//     let cWel = localStorage.getItem("cW") 
+//     let dWel = localStorage.getItem("dW")
+//     let uvIel = localStorage.getItem("uvI")
     
-    cW = JSON.parse(cWel)
-    dW = JSON.parse(dWel)
-    uvI = JSON.parse(uvIel)
+//     cW = JSON.parse(cWel)
+//     dW = JSON.parse(dWel)
+//     uvI = JSON.parse(uvIel)
 
-    populateScreen(cW,dW,uvI)
-}
+//     populateScreen(cW,dW,uvI)
+// }
 
 
 

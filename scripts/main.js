@@ -6,14 +6,16 @@ var maxCity = 8
 
 // set all initial values and function to populate screen load etc
 init()
+
 function init(){
 
     popCity()    
     popForecast()    
     clearScreen()
-    //localReStoreW()
     cityListStored()
-   
+
+    //Adds event listener for prior history click execute 
+    $(".inField").on("click","li",citylistExecute)      
 }
 
 // build deck structure for population by forecast
@@ -41,30 +43,25 @@ function popCity(){
     $(".text-center").append(btnCity).append("<br />")
     
     // Add input Box
-    var inputEl = $("<input id= 'inputCity' placeholder= 'City Name'></input>")
+    var inputEl = $(`<input id= 'inputCity' placeholder= 'City Name' onfocus= 'this.value=""'></input>`)
     $(".text-center").append(inputEl)
 
     // create Div for city value display management
     $(".city").append("<div class= 'inField'></div>")
 
     //add event listener to button passing new City value 
-    $(".btn").on("click", function(event){
-        //event.preventDefault()
+    $(".btn").on("click", function(){
         var cityIn = inputEl.val()
         if (cityIn === ""){ return}
         cityListHandler(cityIn)
-       // $("#inputCity").html('')
-    })
-
-    // add event listener for city fields 
-    //$(".infield").on("click",cityListHandler(this))
+    })  
 }
 
 function cityListHandler(cityIn){   
    
     // Clear old list Item
     $(".inField").empty()
-
+    
     // handles initial start up conlfict by adding first user input value to empty array
     if (cityArray === null){cityArray = [cityIn]}
    
@@ -93,6 +90,19 @@ function cityListHandler(cityIn){
 
     clearScreen()
     apiCall(cityIn)
+
+}
+
+function citylistExecute(){
+
+// on focus click returns city value from li
+ let cityIn = $(this).text()
+ 
+ // reset dynamic layout
+ clearScreen()
+ 
+ // execute api call 
+ apiCall(cityIn)
 
 }
 
