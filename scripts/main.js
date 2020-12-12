@@ -1,7 +1,7 @@
     // Place Holder City Array for User City Choice List 
 var cityArray = []
     // CityArray max allowed stored value
-var maxCity = 8
+var maxCity = 12
     // kick off initialinzing function compilation
 init()
 

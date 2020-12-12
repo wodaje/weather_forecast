@@ -50,7 +50,8 @@ function populateScreen(cW,dW,uvI){
     if (uvIndex <3.51){$("#uvIndex").addClass("favorable")}
     else if (uvIndex >3.5 && uvIndex <7.01){$("#uvIndex").addClass("moderate")}
     else if (uvIndex >7){$("#uvIndex").addClass("severe")}
-    $("#uvIndex").append("UV Index: " + uvIndex).append('<hr />')
+    $("#uvIndex").append("UV Index: " + uvIndex)
+    $(".current").append('<hr />')
 
         //LOOP Load 5-day Forecast forecastDays global variable allows for dynamic code updating via variable
     for (x = 1 ; x < forecastDays+1 ; x++) {
