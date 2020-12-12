@@ -1,17 +1,17 @@
-// API key access free account
+    // API key access free account
 var apiKey = "6baec66594d536d831469149c42d3d07"
 
-// Set to variable for easy changing of days to display or loop if expanded
+    // Set to variable for easy changing of days to display or loop if expanded
 var forecastDays = 5
 
-//function to make API Call
+// FUNCTION: ** API CALL** \\
 async function apiCall(cityIn){
 
     try {
         const r = await $.ajax({url: `https://api.openweathermap.org/data/2.5/weather?q=${cityIn}&units=imperial&appid=${apiKey}`, method: "GET"});
-        // populate var for function ref
+            // populate var to pass on for scren population
         var cW = (r)
-        // pull lattitude and longitude for following API calls
+            // pull lattitude and longitude for following API calls
         let lat = r.coord.lat
         let lon = r.coord.lon
 
@@ -27,15 +27,14 @@ async function apiCall(cityIn){
         cityArray.shift()
         return alert("Something went wrong with your Lookup -pls check city name?")
     }
-    
+        // using output from the three API calls to pass on to below 
     return populateScreen(cW,dW,uvI)
-
 }
 
-
+// FUNCTION: ** This is main control for all API variables placing ** \\
 function populateScreen(cW,dW,uvI){
 
-//Load Daily Forecast
+        //Load Daily Forecast could create elements to hold... discussion point would be slighlty cleaner but longer
     let dateEl = cW.dt
     dateEl = moment.unix(dateEl).format('dddd, MM.DD.YYYY')
     let image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${cW.weather[0].icon}@2x.png`)  
@@ -45,7 +44,7 @@ function populateScreen(cW,dW,uvI){
     $(".current").append("Humidity: " + cW.main.humidity).append('<br />')
     $(".current").append("Wind Speed: " + cW.wind.speed).append('<br />')
 
-    // Adding Color coordination and warning for UV index
+        // Adding Color coordination and warning for UV index
     let uvIndex = uvI.value
     $(".current").append("<div id= 'uvIndex'></div>")
     if (uvIndex <3.51){$("#uvIndex").addClass("favorable")}
@@ -53,8 +52,7 @@ function populateScreen(cW,dW,uvI){
     else if (uvIndex >7){$("#uvIndex").addClass("severe")}
     $("#uvIndex").append("UV Index: " + uvIndex).append('<hr />')
 
-//Load 5-day Forecast via-loop = forecastDays allows easy adjustment of day range dependant on API
-   
+        //LOOP Load 5-day Forecast forecastDays global variable allows for dynamic code updating via variable
     for (x = 1 ; x < forecastDays+1 ; x++) {
         dateEl = dW.daily[x].dt
         dateEl = moment.unix(dateEl).format('MM.DD.YYYY (ddd)')
@@ -66,49 +64,8 @@ function populateScreen(cW,dW,uvI){
         $(`#day${x}`).append(`Temp high:  ${dW.daily[x].temp.max} &#176;F`).append('<br />')
         $(`#day${x}`).append('<br />')
         $(`#day${x}`).append(`Humidity:  ${dW.daily[x].humidity} %`)
-   
     }
-
-    
-
 }
-
-//Old code kept for now for reloading date without api call - not deleted yet as may be useful for something else like history display - possibly
-
-// function localStoreW(cW,dW,uvI){
-
-//     let cWel = JSON.stringify(cW)
-//     let dWel = JSON.stringify(dW)
-//     let uvIel= JSON.stringify(uvI)
-
-//     localStorage.setItem("cW",cWel) 
-//     localStorage.setItem("dW",dWel) 
-//     localStorage.setItem("uvI",uvIel) 
-    
-// }
-
-
-// function localReStoreW(){
-
-//     let cWel = localStorage.getItem("cW") 
-//     let dWel = localStorage.getItem("dW")
-//     let uvIel = localStorage.getItem("uvI")
-    
-//     cW = JSON.parse(cWel)
-//     dW = JSON.parse(dWel)
-//     uvI = JSON.parse(uvIel)
-
-//     populateScreen(cW,dW,uvI)
-// }
-
-
-
-//  ***NOTES***
-
-// conversion moment.unix(yourUnixEpochTime).format('dddd, MMMM Do, YYYY h:mm:ss A')
-
-
-
 
 
 
