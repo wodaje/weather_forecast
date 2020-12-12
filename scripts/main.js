@@ -36,7 +36,6 @@ function popForecast(){
 function popCity(){
     
     // create header and button on City list
-    //var headCity = $("<h5></h5>").text(">>> Search for City:")
     $(".city").append("<div class= 'text-center'></div>")
     var btnCity = $(`<button class= 'btn btn-primary'></button>`)
     btnCity.text("Search for City:")  
@@ -47,7 +46,7 @@ function popCity(){
     $(".text-center").append(inputEl)
 
     // create Div for city value display management
-    $(".city").append("<div class= 'inField'></div>")
+    $(".city").append("<div class= 'inField' style= 'list-style-type: none'></div>")
 
     //add event listener to button passing new City value 
     $(".btn").on("click", function(){

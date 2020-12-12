@@ -44,7 +44,14 @@ function populateScreen(cW,dW,uvI){
     $(".current").append(`Temperature:  ${cW.main.temp} &#176;F`).append('<br />')
     $(".current").append("Humidity: " + cW.main.humidity).append('<br />')
     $(".current").append("Wind Speed: " + cW.wind.speed).append('<br />')
-    $(".current").append("UV Index: " + uvI.value).append('<hr />')
+
+    // Adding Color coordination and warning for UV index
+    let uvIndex = uvI.value
+    $(".current").append("<div id= 'uvIndex'></div>")
+    if (uvIndex <3.51){$("#uvIndex").addClass("favorable")}
+    else if (uvIndex >3.5 && uvIndex <7.01){$("#uvIndex").addClass("moderate")}
+    else if (uvIndex >7){$("#uvIndex").addClass("severe")}
+    $("#uvIndex").append("UV Index: " + uvIndex).append('<hr />')
 
 //Load 5-day Forecast via-loop = forecastDays allows easy adjustment of day range dependant on API
    
@@ -62,7 +69,7 @@ function populateScreen(cW,dW,uvI){
    
     }
 
-        //localStoreW(cW,dW,uvI)
+    
 
 }
 

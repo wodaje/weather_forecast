@@ -76,7 +76,23 @@ h6{
     font-weight: 600;
     border-radius: 0.6rem;
     margin: 1px;
-    position: flex;
-    left: 10%;
+}
 
+li{
+    font-size: 18px;
+}
+
+.favorable{
+color: rgb(16, 85, 16);
+font-weight: 400;
+}
+
+.moderate{
+color: blue;
+font-weight: 600;
+}
+
+.severe{
+color: red;
+font-weight: 900;
 }
