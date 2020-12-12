@@ -24,8 +24,8 @@ async function apiCall(cityIn){
 
     }
     }catch(error){
-        console.log(error)
-        return alert("You may have misspelled City")
+        cityArray.shift()
+        return alert("Something went wrong with your Lookup -pls check city name?")
     }
     
     return populateScreen(cW,dW,uvI)
@@ -62,9 +62,10 @@ function populateScreen(cW,dW,uvI){
    
     }
 
-        
-        localStoreW(cW,dW,uvI)
+        //localStoreW(cW,dW,uvI)
+
 }
+
 
 function localStoreW(cW,dW,uvI){
 
@@ -77,6 +78,7 @@ function localStoreW(cW,dW,uvI){
     localStorage.setItem("uvI",uvIel) 
     
 }
+
 
 function localReStoreW(){
 
@@ -92,14 +94,7 @@ function localReStoreW(){
 }
 
 
-function clearScreen(){
- 
-        $(".current").empty()
-    
-        for (x = 1 ; x<forecastDays+1 ; x++) {
-        $(`#day${x}`).empty()
-       }
-    }
+
 //  ***NOTES***
 
 // conversion moment.unix(yourUnixEpochTime).format('dddd, MMMM Do, YYYY h:mm:ss A')
