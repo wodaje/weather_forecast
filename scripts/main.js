@@ -17,7 +17,12 @@ function init(){
         // Load default last city queried with updated API call
     cityListStored()
         //Adds event listener for city list array 
-    $(".inField").on("click","li",citylistExecute)      
+    $(".inField").on("click","li",citylistExecute)  
+
+    // $(".inField").on("keypress","li",function(e){
+    //     if (e.key === "Enter"){
+    //     citylistExecute}
+    // })      
 }
 
 
@@ -50,8 +55,16 @@ function popCity(){
     $(".btn").on("click", function(){
         var cityIn = inputEl.val()
         if (cityIn === ""){ return}
-        cityListHandler(cityIn)
+        cityListHandler(cityIn) 
     })  
+        //add hit enter capability for above 
+    $("#inputCity").on("keypress", function(enter){
+        if (enter.key === "Enter") {
+            var cityIn = inputEl.val()
+            if (cityIn === ""){ return}
+            cityListHandler(cityIn) 
+        }       
+    })
 }
 
 
