@@ -18,11 +18,6 @@ function init(){
     cityListStored()
         //Adds event listener for city list array 
     $(".inField").on("click","li",citylistExecute)  
-
-    // $(".inField").on("keypress","li",function(e){
-    //     if (e.key === "Enter"){
-    //     citylistExecute}
-    // })      
 }
 
 
