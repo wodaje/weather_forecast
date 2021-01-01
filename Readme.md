@@ -21,3 +21,5 @@ This application allows the user to enter their choice of city names, which are 
 Scrrenshots:
 https://github.com/wodaje/weather_forecast/tree/main/Pictures
 
+License:
+none
